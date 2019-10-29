@@ -1,0 +1,33 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+$background-color: #f9f9f9;
+$border-radius: 1px;
+
+body {
+  background: $background-color;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid darken($background-color, 10);
+  background: darken($background-color, 25);
+}
+
+.CodeMirror {
+  height: auto;
+}
+
+input.form-control {
+  border-radius: $border-radius;
+
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+}
+button.btn {
+  border-radius: $border-radius;
+}
