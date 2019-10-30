@@ -2,9 +2,9 @@
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="bottom">
         <b-navbar-brand href="#">Footer</b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-toggle target="footer-nav-collapse"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" is-nav>
+        <b-collapse id="footer-nav-collapse" is-nav>
             <b-navbar-nav>
                 <b-nav-item href="#">Link</b-nav-item>
                 <b-nav-item href="#" disabled>Disabled</b-nav-item>

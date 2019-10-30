@@ -2,10 +2,10 @@
     <b-container class="mt-3" fluid>
         <b-row>
             <b-col>
-                <Editor v-on:points="updatePoints" :points="points" v-on:compile="compile"></Editor>
-            </b-col>
-            <b-col>
                 <div class="canvas-container"></div>
+            </b-col>
+            <b-col md="12" lg="6">
+                <Editor v-on:points="updatePoints" :points="points" v-on:compile="compile"></Editor>
             </b-col>
         </b-row>
     </b-container>
@@ -22,15 +22,13 @@
     export default {
         data: () => ({
             points: 9,
+            time: 0,
 
             gl: null,
             canvas: null,
-
             fShader: null,
-
-            renderLoop: null,
-            time: 0,
-            currentProgram: null
+            program: null,
+            renderLoop: null
         }),
         components: {
             Editor,
@@ -41,34 +39,33 @@
             },
             compile(event): void {
                 cancelAnimationFrame(this.renderLoop);
-                this.points = event.points;
                 this.time = 0;
                 this.prepareShaderProgram(event.vShader);
             },
             prepareShaderProgram(vShaderSrc: string): void {
                 const vShader = setupShader(this.gl, vShaderSrc, this.gl.VERTEX_SHADER);
-                this.currentProgram = setupProgram(this.gl, vShader, this.fShader);
+                this.program = setupProgram(this.gl, vShader, this.fShader);
 
-                this.gl.useProgram(this.currentProgram);
+                this.gl.useProgram(this.program);
 
-                const location = this.gl.getUniformLocation(this.currentProgram, 'resolution');
+                const location = this.gl.getUniformLocation(this.program, 'resolution');
                 this.gl.uniform2fv(location,
                     new Float32Array([this.canvas.clientWidth, this.canvas.clientHeight]));
 
-                this.loop();
-            },
-            loop(): void {
-                resizeCanvas(this.canvas);
-                this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
-                this.gl.drawArrays(this.gl.POINTS, 0, this.points);
+                const loop = (): void => {
+                    resizeCanvas(this.canvas);
+                    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+                    this.gl.drawArrays(this.gl.POINTS, 0, this.points);
 
-                this.time += 2 / 60;
-                this.gl.uniform1f(
-                    this.gl.getUniformLocation(this.currentProgram, 'time'),
-                    this.time
-                );
+                    this.time += 2 / 60;
+                    this.gl.uniform1f(
+                        this.gl.getUniformLocation(this.program, 'time'),
+                        this.time
+                    );
 
-                this.renderLoop = window.requestAnimationFrame(this.loop);
+                    this.renderLoop = window.requestAnimationFrame(loop)
+                };
+                loop();
             }
         },
         mounted(): void {
