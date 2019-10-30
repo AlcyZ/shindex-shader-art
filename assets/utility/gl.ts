@@ -63,4 +63,4 @@ const resizeCanvas = (canvas: HTMLCanvasElement) => {
     }
 };
 
-export { setupShader, setupProgram, createSimpleProgram, resizeCanvas };
+export {setupShader, setupProgram, createSimpleProgram, resizeCanvas};

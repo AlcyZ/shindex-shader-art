@@ -13,11 +13,12 @@ canvas {
   height: 100%;
 
   border: 1px solid darken($background-color, 10);
-  background: darken($background-color, 25);
+  background: darken($background-color, 75);
 }
 
 .CodeMirror {
-  height: auto;
+  height: 600px;
+  max-height: 600px;
 }
 
 input.form-control {

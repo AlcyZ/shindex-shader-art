@@ -2,6 +2,7 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueRouter from 'vue-router';
 import router from './router';
+// @ts-ignore
 import App from './App';
 
 import 'codemirror/lib/codemirror.css';
